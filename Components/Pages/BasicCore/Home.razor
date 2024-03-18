@@ -1,0 +1,44 @@
+﻿@page "/"
+
+@using CanariasBlog.Areas.CMSCore.Entities;
+@using CanariasBlog.Areas.CMSCore.Repositories;
+@using CanariasBlog.Components.Shared;
+@inject UserRepository userRepository;
+@inject StateContainer StateContainer
+
+<PageTitle>Home - CanariasBlog</PageTitle>
+
+<CanariasBlog.Components.Layout.NavBarHorizontalHome></CanariasBlog.Components.Layout.NavBarHorizontalHome>
+
+<h1>CanariasBlog</h1>
+
+<CanariasBlog.Components.Layout.FooterHome></CanariasBlog.Components.Layout.FooterHome>
+
+@code{
+    protected override void OnInitialized()
+    {
+        try
+        {
+            base.OnInitialized();
+        }
+        catch (Exception ex)
+        {
+            Failure failure = new()
+                {
+                    Active = true,
+                    DateTimeCreation = DateTime.Now,
+                    DateTimeLastModification = DateTime.Now,
+                    UserCreationId = 1,
+                    UserLastModificationId = 1,
+                    EmergencyLevel = 1,
+                    Comment = "",
+                    Message = ex.Message,
+                    Source = ex.Source,
+                    StackTrace = ex.StackTrace
+                };
+
+            failureRepository.Add(failure);
+        }
+
+    }
+}
